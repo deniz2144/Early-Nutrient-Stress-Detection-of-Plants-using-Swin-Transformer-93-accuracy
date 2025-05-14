@@ -13,13 +13,22 @@ For this project, I worked with the **Early Nutrient Stress Detection of Plants*
 The dataset is designed for multi-class image classification and contains thousands of annotated leaf images categorized into 9 classes:
 
 -ashgourd_fresh
+
 -ashgourd_nitrogen
+
 -ashgourd_potassium
+
 -bittergourd_fresh
+
 -bittergourd_nitrogen
+
+
 -bittergourd_potassium
+
 -snakegourd_fresh
+
 -snakegourd_nitrogen
+
 -snakegourd_potassium
 
 What makes this dataset particularly interesting is the subtlety of the differences between stress conditions — which is ideal for evaluating the ability of deep learning models to detect fine-grained visual cues in a biological context. Unlike synthetic or highly-contrasted datasets, this one simulates real agricultural conditions, which I find both more challenging and more rewarding to work with.
