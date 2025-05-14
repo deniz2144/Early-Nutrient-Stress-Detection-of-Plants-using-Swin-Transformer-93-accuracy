@@ -66,8 +66,6 @@ The model performance on the test set was measured using the following metrics:
 ```bash
 python model.py   # Training
 python test.py    # Testing and evaluation
-![WhatsApp Görsel 2025-05-14 saat 14 44 19_d7d5f204](https://github.com/user-attachments/assets/91fc903b-5923-43fb-9b8e-136a91fdd804)
 
 
 
-![WhatsApp Görsel 2025-05-14 saat 14 44 13_a65aa9fa](https://github.com/user-attachments/assets/8ab0a108-3b40-4df4-9817-91b69c74a62f)
