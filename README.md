@@ -114,7 +114,7 @@ python test.py    # Evaluate on the test set
 
 📉 **Confusion Matrix Visualization:**
 
-![Confusion Matrix].(https://github.com/user-attachments/assets/240c6403-a5b7-4336-8b44-9cca532cc942)
+![Confusion Matrix](https://github.com/user-attachments/assets/240c6403-a5b7-4336-8b44-9cca532cc942).
 
 As shown above, the confusion matrix provides valuable insights into how the model handles inter-class similarity — a real challenge in leaf stress classification.
 
