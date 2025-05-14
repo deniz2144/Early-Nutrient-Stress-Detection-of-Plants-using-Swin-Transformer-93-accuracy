@@ -1,10 +1,17 @@
+
+# 🌿 Early Detection of Plant Nutrient Stress with Swin Transformer
+
+This project implements a deep learning-based computer vision system that automatically detects early nutrient stress in plant leaves using Swin Transformer architecture. It is designed as a practical solution that could be integrated into smart agriculture systems for proactive crop monitoring.
+
+---
+
 ## 📁 Dataset
 
-Dataset used:  
-**Early Nutrient Stress Detection of Plants**  
+For this project, I worked with the **Early Nutrient Stress Detection of Plants** dataset, available on Kaggle:  
 📎 [Kaggle Link](https://www.kaggle.com/datasets/raiaone/early-nutrient-stress-detection-of-plants)
 
-The dataset consists of 9 classes:
+The dataset is designed for multi-class image classification and contains thousands of annotated leaf images categorized into 9 classes:
+
 - Early Nitrogen Stress  
 - Early Phosphorus Stress  
 - Early Potassium Stress  
@@ -15,57 +22,108 @@ The dataset consists of 9 classes:
 - Control (Healthy)  
 - Others
 
+What makes this dataset particularly interesting is the subtlety of the differences between stress conditions — which is ideal for evaluating the ability of deep learning models to detect fine-grained visual cues in a biological context. Unlike synthetic or highly-contrasted datasets, this one simulates real agricultural conditions, which I find both more challenging and more rewarding to work with.
+
+---
+
 ## 🧠 Model
 
-The model is based on the [Swin Transformer](https://arxiv.org/abs/2103.14030), implemented using PyTorch and the `timm` library.
+I chose to use the [Swin Transformer](https://arxiv.org/abs/2103.14030) for this project, implemented via PyTorch and the `timm` library. My reasoning was simple: Swin Transformer has proven to outperform many CNN-based models on fine-grained classification tasks due to its ability to capture both local and global dependencies effectively.
 
-- Backbone: `swin_base_patch4_window7_224`  
-- Output: `Flatten + Linear` (9 classes)  
-- Initialized with pretrained ImageNet weights
+### 🔧 Architecture Details:
+
+- **Backbone:** `swin_base_patch4_window7_224`  
+- **Classification Head:** Replaced with a custom `Flatten + Linear` layer adapted for 9 output classes  
+- **Weights:** Initialized using pretrained ImageNet parameters for transfer learning efficiency
+
+By replacing the final classification head and fine-tuning the feature extractor on my domain-specific dataset, I was able to achieve high performance with relatively limited training time.
+
+---
 
 ## ⚙️ Technologies Used
 
-- Python 3  
-- PyTorch  
-- timm (PyTorch Image Models)  
-- scikit-learn (for evaluation metrics)  
-- matplotlib & seaborn (for visualization)
+This project was built using the following stack:
+
+- **Python 3** – for flexibility and rapid prototyping  
+- **PyTorch** – core deep learning framework  
+- **timm** – for easy access to SOTA pretrained transformer models  
+- **scikit-learn** – to compute detailed evaluation metrics  
+- **matplotlib & seaborn** – for high-quality visualizations
+
+Everything was built with reproducibility and readability in mind.
+
+---
 
 ## 🔁 Data Preprocessing
 
-**Training-time augmentations:**
-- Resize to 224x224  
-- Random Horizontal Flip  
-- Random Rotation  
-- Random Resized Crop  
-- Color Jitter  
-- Normalization (ImageNet mean/std)
+Having worked on vision systems before, I know how critical preprocessing and data augmentation can be — especially with datasets derived from real environments like farms or greenhouses.
 
-**During testing:**
-- Only resizing and normalization applied
+So I designed a data pipeline that both standardizes the image input and introduces robust variability for generalization. Here's what it looks like during **training**:
+
+- 🔄 `Resize` to 224×224  
+- ↔️ `Random Horizontal Flip`  
+- 🔁 `Random Rotation` (±15°)  
+- 🔍 `Random Resized Crop`  
+- 🎨 `Color Jitter` for simulating lighting changes  
+- 📐 `Normalization` using ImageNet stats
+
+```python
+mean = [0.485, 0.456, 0.406]
+std  = [0.229, 0.224, 0.225]
+```
+
+During **testing**, I disabled augmentations and used only resizing and normalization to maintain consistency in evaluation.
+
+> These augmentations helped the model learn under noisy conditions that are likely in real-world field scenarios — such as leaves photographed from different angles, under different lighting, or with camera imperfections.
+
+### 🔍 Augmented Sample Preview
+
+![Augmented Samples](https://github.com/user-attachments/assets/175695fe-d01c-41c5-a6d8-779c86dc35c6)
+
+---
 
 ## 📊 Training Details
 
-- Epochs: 10  
-- Batch Size: 16  
-- Optimizer: AdamW  
-- Learning Rate: 5e-5  
-- Loss Function: CrossEntropyLoss
+This model was trained using the following setup:
 
-The trained model is saved in `.pth` format: `swin_transformer_model.pth`
+```yaml
+Epochs: 10
+Batch Size: 16
+Optimizer: AdamW
+Learning Rate: 5e-5
+Loss Function: CrossEntropyLoss
+```
+
+- All training was done on a standard GPU setup.
+- The final model is saved as: `swin_transformer_model.pth`
+
+---
 
 ## ✅ Evaluation
 
-The model performance on the test set was measured using the following metrics:
-- Accuracy  
-- Precision, Recall, F1-score (per class)  
-- Confusion Matrix
+The model was evaluated on a separate test set using:
 
-### To run:
+- Accuracy  
+- Precision, Recall, and F1-score (for each class)
+- Confusion Matrix to understand misclassification patterns
 
 ```bash
-python model.py   # Training
-python test.py    # Testing and evaluation
+python model.py   # Train the model
+python test.py    # Evaluate on the test set
+```
 
+📉 **Confusion Matrix Visualization:**
 
+![Confusion Matrix](https://github.com/user-attachments/assets/50a06d92-5468-4e51-ae37-d6119b9940cc)
 
+As shown above, the confusion matrix provides valuable insights into how the model handles inter-class similarity — a real challenge in leaf stress classification.
+
+---
+
+## 💬 Final Thoughts
+
+This project isn't just a technical exercise — it reflects how AI can play a practical role in sustainable agriculture. By building a robust, fine-tuned model based on real data, I wanted to demonstrate how deep learning models can be deployed to support farmers in early disease detection and nutrient management.
+
+I approached this project not just as a developer, but as someone who genuinely believes in the power of AI to solve real-world problems.
+
+---
